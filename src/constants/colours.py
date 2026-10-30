@@ -23,3 +23,21 @@ TYRE_COLOURS = {
     "intermediate": "#137730",
     "wet": "#007BC3"
 }
+
+#Colours to colour code data points
+DATA_POINT_STATUS_COLOURS = {
+    "optimal": "#089700",
+    "sub_optimal": "#E6A900",
+    "pessimal": "#C50000" 
+}
+
+TIMING_COLOURS = {
+    "purple": "#9900FF",
+    "green": "#00D21D"
+}
+
+GENERAL_COLOURS = {
+    "background": "#1D1D1D",
+    "mainText": "FFFFFF",
+    "tester": "#AEFF00"
+}
