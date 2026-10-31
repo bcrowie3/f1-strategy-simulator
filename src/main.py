@@ -25,7 +25,7 @@ def main(page: ft.Page):
 
     #If a route change is called the navigate function is called
     page.on_route_change = navigate
-
+    
     #Opens app on the set home page
     page.go("/")
 
