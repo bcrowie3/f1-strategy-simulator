@@ -3,15 +3,15 @@
 #Colours for teams
 TEAM_COLOURS = {
     "alpine": "#FF60E2",
-    "aston_martin": "#229971",
+    "aston martin": "#229971",
     "audi": "#CF002C",
     "cadillac": "#C5A253",
     "ferrari": "#DC0000",
     "haas": "#FFFFFF",
     "mclaren": "#FF8700",
     "mercedes": "#00D2BE",
-    "racing_bulls": "#3756FE",
-    "red_bull": "#0600EF",
+    "racing bulls": "#3756FE",
+    "red bull": "#0600EF",
     "williams": "#669CFF"
 }
 
@@ -27,7 +27,7 @@ TYRE_COLOURS = {
 #Colours to colour code data points
 DATA_POINT_STATUS_COLOURS = {
     "optimal": "#089700",
-    "sub_optimal": "#E6A900",
+    "sub optimal": "#E6A900",
     "pessimal": "#C50000" 
 }
 
@@ -39,7 +39,7 @@ TIMING_COLOURS = {
 GENERAL_COLOURS = {
     "background": "#1D1D1D",
     "overlay": "#464646",
-    "nav_button_highlight": "#6C6C6C",
-    "main_text": "#FFFFFF",
+    "nav button highlight": "#6C6C6C",
+    "main text": "#FFFFFF",
     "tester": "#AEFF00"
 }
