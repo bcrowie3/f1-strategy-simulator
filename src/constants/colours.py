@@ -38,6 +38,8 @@ TIMING_COLOURS = {
 
 GENERAL_COLOURS = {
     "background": "#1D1D1D",
-    "mainText": "FFFFFF",
+    "overlay": "#464646",
+    "nav_button_highlight": "#6C6C6C",
+    "main_text": "#FFFFFF",
     "tester": "#AEFF00"
 }
