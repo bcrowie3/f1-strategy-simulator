@@ -12,7 +12,8 @@ def homePage(page: ft.Page):
     #"Start" button
     startButton = ft.Button(
         "Start",
-        on_click=lambda _: page.go("/setup"),
+        key="start",
+        on_click=lambda _: page.navigate("/setup"),
         style=ft.ButtonStyle(
             shape=ft.RoundedRectangleBorder(radius=15),
             text_style=ft.TextStyle(size=18),
@@ -30,7 +31,7 @@ def homePage(page: ft.Page):
                 width=2.0,
                 color=GENERAL_COLOURS["nav button highlight"],
             ),
-            padding=ft.padding.symmetric(
+            padding=ft.Padding.symmetric(
                 vertical=15,
                 horizontal=20
             )
@@ -45,11 +46,11 @@ def homePage(page: ft.Page):
                 controls=[
                     ft.Container(
                         content=title,
-                        alignment=ft.alignment.center,
+                        alignment=ft.Alignment.CENTER,
                     ),
                     ft.Container(
                         content=startButton,
-                        alignment=ft.alignment.bottom_right,
+                        alignment=ft.Alignment.BOTTOM_RIGHT,
                         padding=10,
                     )
                 ],

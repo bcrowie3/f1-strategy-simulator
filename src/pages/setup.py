@@ -4,8 +4,8 @@ from constants.colours import GENERAL_COLOURS, TEAM_COLOURS
 def setupPage(page: ft.Page):
     #Page title
     title = ft.Text(
-        "Page 2 tester", 
-        size = 64,
+        "Select a driver, track, and difficulty", 
+        size = 44,
         color = GENERAL_COLOURS["main text"]
         )
     
@@ -25,11 +25,11 @@ def setupPage(page: ft.Page):
                 ft.ControlState.HOVERED: GENERAL_COLOURS["nav button highlight"],
                 ft.ControlState.PRESSED: ft.Colors.TRANSPARENT
             },
-            side = ft.BorderSide(
+            side=ft.BorderSide(
                 width=2.0,
                 color=GENERAL_COLOURS["nav button highlight"],
             ),
-            padding=ft.padding.symmetric(
+            padding=ft.Padding.symmetric(
                 vertical=15,
                 horizontal=20
             )
@@ -44,11 +44,11 @@ def setupPage(page: ft.Page):
                 controls=[
                     ft.Container(
                         content=title,
-                        alignment=ft.alignment.center,
+                        alignment=ft.Alignment.TOP_CENTER,
                     ),
                     ft.Container(
                         content=qualifyingButton,
-                        alignment=ft.alignment.bottom_right,
+                        alignment=ft.Alignment.BOTTOM_RIGHT,
                         padding=10,
                     )
                 ],
