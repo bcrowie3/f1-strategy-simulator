@@ -13,11 +13,12 @@ def main(page: ft.Page):
     page.theme = ft.Theme(font_family="mainFont")
 
     #Handles page routing
-    def navigate(route):
-        if page.route == "/":
-            page.views.append(homePage(page))
+    def navigate(e=None):
+        page.views.clear()
 
-        elif page.route == "/setup":
+        page.views.append(homePage(page))
+
+        if page.route == "/setup":
             page.views.append(setupPage(page))
 
         #Refreshes the view
@@ -27,7 +28,7 @@ def main(page: ft.Page):
     page.on_route_change = navigate
     
     #Opens app on the set home page
-    page.go("/")
+    navigate()
 
 
-ft.app(main, assets_dir="assets")
+ft.run(main, assets_dir="assets")
