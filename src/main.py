@@ -5,12 +5,12 @@ from pages.setup import setupPage
 
 
 def main(page: ft.Page):
-    page.title = "F1 Strategy Sim"
-    page.bgcolor = GENERAL_COLOURS["background"]
+    page.title="F1 Strategy Sim"
+    page.bgcolor=GENERAL_COLOURS["background"]
 
     #Saving Arial and setting it as the default font
-    page.fonts = {"mainFont": "fonts/Arial.ttf"}
-    page.theme = ft.Theme(font_family="mainFont")
+    page.fonts={"mainFont": "fonts/Arial.ttf"}
+    page.theme=ft.Theme(font_family="mainFont")
 
     #Handles page routing
     def navigate(e=None):
