@@ -1,6 +1,6 @@
 #Contains all driver data
 
-drivers = {
+DRIVERS = {
     10: {
         "number": "10",
         "forename": "pierre",

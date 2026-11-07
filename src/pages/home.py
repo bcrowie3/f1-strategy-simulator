@@ -3,14 +3,14 @@ from constants.colours import GENERAL_COLOURS
 
 def homePage(page: ft.Page):
     #App title
-    title=ft.Text(
+    title = ft.Text(
         "F1 Strategy Simulator", 
         size=64,
         color=GENERAL_COLOURS["main text"]
         )
     
     #"Start" button
-    startButton=ft.Button(
+    startButton = ft.Button(
         "Start",
         key="start",
         on_click=lambda _: page.navigate("/setup"),

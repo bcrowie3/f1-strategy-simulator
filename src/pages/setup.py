@@ -1,19 +1,69 @@
 import flet as ft
 from constants.colours import GENERAL_COLOURS, TEAM_COLOURS
+from constants.drivers import DRIVERS
+from constants.tracks import TRACKS
+from constants.difficulty import DIFFICULTY_LEVELS
+import asyncio
 
 def setupPage(page: ft.Page):
+    #Variables to store selected driver, race, and difficulty
+    selectedDriver: int = None
+    selectedTrack: str = None
+    selectedDifficulty: str = None
+
+    def select_driver(selectedDr: int):
+        nonlocal selectedDriver
+        selectedDriver = selectedDr
+
+    def select_track(selectedTr: str):
+        nonlocal selectedTrack
+        selectedTrack = selectedTr
+
+    def select_difficulty(selectedDi: str):
+        nonlocal selectedDifficulty
+        selectedDifficulty = selectedDi
+    
+    async def to_qualifying():
+        if selectedDriver is None or selectedTrack is None or selectedDifficulty is None:
+            #Stores the starting colour of each heading
+            driverStartingColor = driverHeading.color
+            trackStartingColor = driverHeading.color
+            difficultyStartingColor = difficultyHeading.color
+
+            #If a section has no selection the heading colour is changed 
+            if selectedDriver is None:
+                driverHeading.color = GENERAL_COLOURS["error"]
+            if selectedTrack is None:
+                trackHeading.color = GENERAL_COLOURS["error"]
+            if selectedDifficulty is None:
+                difficultyHeading.color = GENERAL_COLOURS["error"]
+
+            #Updates UI for error colouring and waits for 3 seconds
+            page.update()
+            await asyncio.sleep(3)
+
+            #Ensures any changed heading colours are reverted to the original
+            driverHeading.color = driverStartingColor
+            trackHeading.color = trackStartingColor
+            difficultyHeading.color = difficultyStartingColor
+            page.update()
+            
+            return
+
+
+
     #Page title
     title = ft.Text(
-        "Select a driver, track, and difficulty", 
-        size = 44,
-        color = GENERAL_COLOURS["main text"]
+        "Race Setup", 
+        size=44,
+        color=GENERAL_COLOURS["main text"]
         )
     
     #Button to navigate to the next page
-    qualifyingButton=ft.Button(
+    qualifyingButton = ft.Button(
         "Qualifying",
         key="qualifying",
-        on_click=lambda _: None,
+        on_click=to_qualifying,
         style=ft.ButtonStyle(
             shape=ft.RoundedRectangleBorder(radius=15),
             text_style=ft.TextStyle(size=18),
@@ -39,7 +89,7 @@ def setupPage(page: ft.Page):
     )
 
     #Button to navigate back to the home page
-    backButton=ft.IconButton(
+    backButton = ft.IconButton(
         icon=ft.Icons.ARROW_BACK_IOS,
         key="back",
         on_click=lambda _: page.navigate("/"),
@@ -62,48 +112,152 @@ def setupPage(page: ft.Page):
         )
     )
 
+    #Header with the title and back button
+    appBar = ft.AppBar(
+        leading=ft.Container(
+            content=backButton,
+            padding=ft.Padding(
+                left=10,
+                right=0,
+                top=0,
+                bottom=0
+            )
+        ),
+        leading_width=42,
+        title=title,
+        center_title=True,
+        bgcolor=GENERAL_COLOURS["background"],
+
+        #Stops the appbar from reacting to content scrolling below it
+        elevation=0,
+        elevation_on_scroll=0
+    )
+
+    #Driver heading 
+    driverHeading = ft.Text(
+        "Driver:", 
+        size=38,
+        color=GENERAL_COLOURS["main text"]
+        )
+    
+    #Track heading 
+    trackHeading = ft.Text(
+        "Track:", 
+        size=38,
+        color=GENERAL_COLOURS["main text"]
+        )
+    
+    #Difficulty heading 
+    difficultyHeading = ft.Text(
+        "Difficulty:", 
+        size=38,
+        color=GENERAL_COLOURS["main text"]
+        )
+
+    #List of driver buttons
+    driverNames = [
+        ft.TextButton(
+            content=f"{driver["forename"][0].upper()}. {driver["surname"].capitalize()}",
+            key=number,
+            on_click=lambda _, driverNumber=number: select_driver(driverNumber),
+            style=ft.ButtonStyle(
+                color=TEAM_COLOURS[driver["team"]],
+                text_style=ft.TextStyle(size=28),
+            )
+        )
+        for number, driver in DRIVERS.items()
+    ]
+
+    #List of track buttons
+    trackNames = [
+        ft.TextButton(
+            content=f"{name} ({track["country"]})",
+            key=name,
+            on_click=lambda _, trackName=name: select_track(trackName),
+            style=ft.ButtonStyle(
+                color=GENERAL_COLOURS["main text"],
+                text_style=ft.TextStyle(size=28)
+            )
+        )
+        for name, track in TRACKS.items()
+    ]
+
+    #List of difficulty level buttons
+    diffLevels = [
+        ft.TextButton(
+            content=level,
+            key=level,
+            on_click=lambda _, difficulty=level: select_difficulty(difficulty),
+            style=ft.ButtonStyle(
+                color=GENERAL_COLOURS["main text"],
+                text_style=ft.TextStyle(size=28)
+            )
+        )
+        for level in DIFFICULTY_LEVELS
+    ]
+
     return ft.View(
         route="/setup",
         bgcolor=GENERAL_COLOURS["background"],
-
-        #Header with the title and back button
-        appbar = ft.AppBar(
-            leading=ft.Container(
-                content=backButton,
-                padding=ft.Padding(
-                    left=10,
-                    right=0,
-                    top=0,
-                    bottom=0
-                )
-            ),
-            leading_width=42,
-            title=title,
-            center_title=True,
-            bgcolor=GENERAL_COLOURS["background"],
-        ),
+        appbar=appBar,
         controls=[
-            ft.Column(
+
+            #Column headings
+            ft.Row(
+                spacing=10,
                 controls=[
-                    ft.Row(
-                        controls=[
-                            ft.Container(
-                                content=ft.Text("placeholder"),
-                                alignment=ft.Alignment.CENTER,
-                                expand=True
-                            )
-                        ],
-                        tight=True,
-                        
+                    #Driver heading
+                    ft.Column(
+                        driverHeading,
+                        expand=1,
                     ),
-                    ft.Container(
-                        content=qualifyingButton,
-                        alignment=ft.Alignment.BOTTOM_RIGHT,
-                        padding=10,
-                        expand=True
-                    )
+                    #Track heading
+                    ft.Column(
+                        trackHeading,
+                        expand=2,   
+                    ),
+                    #Difficulty heading
+                    ft.Column(
+                        difficultyHeading,
+                        expand=1,   
+                    ),
                 ],
-                expand=True
-            )      
+            ),
+
+            #Three columns with setup options
+            ft.Row(
+                expand=True,
+                spacing=10,
+                controls=[
+                    #Driver options
+                    ft.Column(
+                        controls=[
+                            *driverNames
+                        ],
+                        scroll=ft.ScrollMode.AUTO,
+                        expand=1,
+                    ),
+                    #Track options
+                    ft.Column(
+                        controls=[
+                            *trackNames
+                        ],
+                        expand=2,   
+                    ),
+                    #Difficulty options
+                    ft.Column(
+                        controls=[
+                            *diffLevels,
+                        ],
+                        expand=1,   
+                    ),
+                ],
+            ),
+            #Qualifying button
+            ft.Container(
+                    content=qualifyingButton,
+                    alignment=ft.Alignment.BOTTOM_RIGHT,
+                    padding=10
+            )
         ]
     )
