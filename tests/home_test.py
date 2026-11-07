@@ -2,6 +2,7 @@ import flet.testing as ftt
 
 
 async def test_start_button(flet_app: ftt.FletTestApp):
+    #Starting the app and letting it load
     tester = flet_app.tester
 
     await tester.pump_and_settle()
@@ -17,4 +18,4 @@ async def test_start_button(flet_app: ftt.FletTestApp):
     await tester.pump_and_settle()
 
     #Checking setup page appears
-    assert (await tester.find_by_text("Select a driver, track, and difficulty")).count == 1
+    assert (await tester.find_by_text("Race Setup")).count == 1

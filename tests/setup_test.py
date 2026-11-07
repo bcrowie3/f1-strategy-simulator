@@ -2,8 +2,8 @@ import flet.testing as ftt
 
 
 async def test_setup_back_button(flet_app: ftt.FletTestApp):
+    #Starting the app and letting it load
     tester = flet_app.tester
-
     await tester.pump_and_settle()
 
     #Tapping the "start" button (found by its key) and let the UI update
@@ -11,7 +11,7 @@ async def test_setup_back_button(flet_app: ftt.FletTestApp):
     await tester.pump_and_settle()
 
     #Checking initial state
-    assert (await tester.find_by_text("Select a driver, track, and difficulty")).count == 1
+    assert (await tester.find_by_text("Race Setup")).count == 1
 
     #Checking back button exists
     assert (await tester.find_by_key("back")).count == 1
