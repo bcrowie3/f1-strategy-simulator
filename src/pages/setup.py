@@ -11,26 +11,80 @@ def setupPage(page: ft.Page):
     selectedTrack: str = None
     selectedDifficulty: str = None
 
+    #Underlines the selected driver and clears past selection if required
+    def highlight_selected_driver():
+        for driver in driverNames:
+            if driver.key == selectedDriver:
+                driver.style = driver.style.copy(
+                    text_style=driver.style.text_style.copy(
+                        decoration=ft.TextDecoration.UNDERLINE
+                    )
+                )
+            else:
+                driver.style = driver.style.copy(
+                    text_style=driver.style.text_style.copy(
+                        decoration=ft.TextDecoration.NONE
+                    )
+                )
+    
+    #Underlines the selected track and clears past selection if required
+    def highlight_selected_track():
+        for track in trackNames:
+            if track.key == selectedTrack:
+                track.style = track.style.copy(
+                    text_style=track.style.text_style.copy(
+                        decoration=ft.TextDecoration.UNDERLINE
+                    )
+                )
+            else:
+                track.style = track.style.copy(
+                    text_style=track.style.text_style.copy(
+                        decoration=ft.TextDecoration.NONE
+                    )
+                )
+
+    #Underlines the selected difficulty and clears past selection if required
+    def highlight_selected_difficulty():
+        for difficulty in diffLevels:
+            if difficulty.key == selectedDifficulty:
+                difficulty.style = difficulty.style.copy(
+                    text_style=difficulty.style.text_style.copy(
+                        decoration=ft.TextDecoration.UNDERLINE
+                    )
+                )
+            else:
+                difficulty.style = difficulty.style.copy(
+                    text_style=difficulty.style.text_style.copy(
+                        decoration=ft.TextDecoration.NONE
+                    )
+                )
+    
+    #Selects (and highlights) the driver/unselects if already selected
     def select_driver(selectedDr: int):
         nonlocal selectedDriver
         if not selectedDriver == selectedDr:
             selectedDriver = selectedDr
         else:
             selectedDriver = None
+        highlight_selected_driver()
 
+    #Selects (and highlights) the track/unselects if already selected
     def select_track(selectedTr: str):
         nonlocal selectedTrack
         if not selectedTrack == selectedTr:
             selectedTrack = selectedTr
         else:
             selectedTrack = None
+        highlight_selected_track()
 
+    #Selects (and highlights) the difficulty/unselects if already selected
     def select_difficulty(selectedDi: str):
         nonlocal selectedDifficulty
         if not selectedDifficulty == selectedDi:
             selectedDifficulty = selectedDi
         else:
             selectedDifficulty = None
+        highlight_selected_difficulty()
     
     async def to_qualifying():
         if selectedDriver is None or selectedTrack is None or selectedDifficulty is None:
