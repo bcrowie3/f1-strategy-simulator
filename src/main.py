@@ -2,6 +2,7 @@ import flet as ft
 from constants.colours import GENERAL_COLOURS
 from pages.home import homePage
 from pages.setup import setupPage
+from pages.qualifying import qualifyingPage
 
 
 def main(page: ft.Page):
@@ -20,6 +21,9 @@ def main(page: ft.Page):
 
         if page.route == "/setup":
             page.views.append(setupPage(page))
+        
+        if page.route == "/qualifying":
+            page.views.append(qualifyingPage(page))
 
         #Refreshes the view
         page.update()

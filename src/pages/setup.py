@@ -13,15 +13,24 @@ def setupPage(page: ft.Page):
 
     def select_driver(selectedDr: int):
         nonlocal selectedDriver
-        selectedDriver = selectedDr
+        if not selectedDriver == selectedDr:
+            selectedDriver = selectedDr
+        else:
+            selectedDriver = None
 
     def select_track(selectedTr: str):
         nonlocal selectedTrack
-        selectedTrack = selectedTr
+        if not selectedTrack == selectedTr:
+            selectedTrack = selectedTr
+        else:
+            selectedTrack = None
 
     def select_difficulty(selectedDi: str):
         nonlocal selectedDifficulty
-        selectedDifficulty = selectedDi
+        if not selectedDifficulty == selectedDi:
+            selectedDifficulty = selectedDi
+        else:
+            selectedDifficulty = None
     
     async def to_qualifying():
         if selectedDriver is None or selectedTrack is None or selectedDifficulty is None:
@@ -49,6 +58,9 @@ def setupPage(page: ft.Page):
             page.update()
             
             return
+        
+        else:
+            page.navigate("/qualifying"),
 
 
 
@@ -196,11 +208,21 @@ def setupPage(page: ft.Page):
         for level in DIFFICULTY_LEVELS
     ]
 
+    instructions = ft.Text(
+        "Select a driver, track, and difficulty to proceed.", 
+        size=20,
+        color=GENERAL_COLOURS["main text"]
+    )
+
     return ft.View(
         route="/setup",
         bgcolor=GENERAL_COLOURS["background"],
         appbar=appBar,
         controls=[
+            #Instruction line 
+            ft.Row(
+                instructions
+            ),
 
             #Column headings
             ft.Row(
