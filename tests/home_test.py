@@ -1,6 +1,6 @@
 import flet.testing as ftt
 
-
+#Testing the start button works
 async def test_start_button(flet_app: ftt.FletTestApp):
     #Starting the app and letting it load
     tester = flet_app.tester
