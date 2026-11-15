@@ -67,6 +67,7 @@ def setupPage(page: ft.Page):
         else:
             selectedDriver = None
         highlight_selected_driver()
+        update_instructionLine()
 
     #Selects (and highlights) the track/unselects if already selected
     def select_track(selectedTr: str):
@@ -76,6 +77,7 @@ def setupPage(page: ft.Page):
         else:
             selectedTrack = None
         highlight_selected_track()
+        update_instructionLine()
 
     #Selects (and highlights) the difficulty/unselects if already selected
     def select_difficulty(selectedDi: str):
@@ -85,7 +87,41 @@ def setupPage(page: ft.Page):
         else:
             selectedDifficulty = None
         highlight_selected_difficulty()
+        update_instructionLine()
     
+    def generate_instructions():
+        instructions = "Before proceeding, please select a"
+
+        if selectedDriver is None and selectedTrack is not None and selectedDifficulty is not None:
+            instructions += " driver."
+
+        if selectedDriver is not None and selectedTrack is None and selectedDifficulty is not None:
+            instructions += " track."
+
+        if selectedDriver is not None and selectedTrack is not None and selectedDifficulty is None:
+            instructions += " difficulty."
+
+        if selectedDriver is None and selectedTrack is None and selectedDifficulty is not None:
+            instructions += " driver and track."
+
+        if selectedDriver is None and selectedTrack is not None and selectedDifficulty is None:
+            instructions += " driver and difficulty."
+        
+        if selectedDriver is not None and selectedTrack is None and selectedDifficulty is None:
+            instructions += " track, and difficulty."
+
+        if selectedDriver is None and selectedTrack is None and selectedDifficulty is None:
+            instructions += " driver, track, and difficulty."
+        
+        if selectedDriver is not None and selectedTrack is not None and selectedDifficulty is not None:
+            instructions = "All necessary selections have been satisfied."
+        
+        return instructions
+    
+    def update_instructionLine():
+        instructionLine.value = generate_instructions()
+        page.update()
+     
     async def to_qualifying():
         if selectedDriver is None or selectedTrack is None or selectedDifficulty is None:
             #Stores the starting colour of each heading
@@ -115,8 +151,6 @@ def setupPage(page: ft.Page):
         
         else:
             page.navigate("/qualifying"),
-
-
 
     #Page title
     title = ft.Text(
@@ -262,8 +296,8 @@ def setupPage(page: ft.Page):
         for level in DIFFICULTY_LEVELS
     ]
 
-    instructions = ft.Text(
-        "Select a driver, track, and difficulty to proceed.", 
+    instructionLine = ft.Text(
+        generate_instructions(), 
         size=20,
         color=GENERAL_COLOURS["main text"]
     )
@@ -275,7 +309,7 @@ def setupPage(page: ft.Page):
         controls=[
             #Instruction line 
             ft.Row(
-                instructions
+                instructionLine
             ),
 
             #Column headings
