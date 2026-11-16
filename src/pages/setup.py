@@ -108,7 +108,7 @@ def setupPage(page: ft.Page):
             instructions += " driver and difficulty."
         
         if selectedDriver is not None and selectedTrack is None and selectedDifficulty is None:
-            instructions += " track, and difficulty."
+            instructions += " track and difficulty."
 
         if selectedDriver is None and selectedTrack is None and selectedDifficulty is None:
             instructions += " driver, track, and difficulty."
