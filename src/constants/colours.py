@@ -41,6 +41,8 @@ GENERAL_COLOURS = {
     "overlay": "#464646",
     "nav button highlight": "#6C6C6C",
     "main text": "#FFFFFF",
+    "highlighted main text": "#777777",
     "error": "#FFBF00",
+    "paused screen": "#B3333333",
     "tester": "#AEFF00"
 }

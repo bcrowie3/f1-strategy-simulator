@@ -261,7 +261,11 @@ def setupPage(page: ft.Page):
             key=number,
             on_click=lambda _, driverNumber=number: select_driver(driverNumber),
             style=ft.ButtonStyle(
-                color=TEAM_COLOURS[driver["team"]],
+                color={
+                    ft.ControlState.DEFAULT: TEAM_COLOURS[driver["team"]],
+                    ft.ControlState.HOVERED: f"#66{TEAM_COLOURS[driver["team"]][1:]}"
+                },
+                overlay_color=ft.Colors.TRANSPARENT,
                 text_style=ft.TextStyle(size=28),
             )
         )
@@ -275,7 +279,11 @@ def setupPage(page: ft.Page):
             key=name,
             on_click=lambda _, trackName=name: select_track(trackName),
             style=ft.ButtonStyle(
-                color=GENERAL_COLOURS["main text"],
+                color={
+                    ft.ControlState.DEFAULT: GENERAL_COLOURS["main text"],
+                    ft.ControlState.HOVERED: f"#66{GENERAL_COLOURS['main text'][1:]}"
+                },
+                overlay_color=ft.Colors.TRANSPARENT,
                 text_style=ft.TextStyle(size=28)
             )
         )
@@ -289,7 +297,11 @@ def setupPage(page: ft.Page):
             key=level,
             on_click=lambda _, difficulty=level: select_difficulty(difficulty),
             style=ft.ButtonStyle(
-                color=GENERAL_COLOURS["main text"],
+                color={
+                    ft.ControlState.DEFAULT: GENERAL_COLOURS["main text"],
+                    ft.ControlState.HOVERED: f"#66{GENERAL_COLOURS['main text'][1:]}"
+                },
+                overlay_color=ft.Colors.TRANSPARENT,
                 text_style=ft.TextStyle(size=28)
             )
         )
@@ -367,7 +379,7 @@ def setupPage(page: ft.Page):
             ft.Container(
                     content=qualifyingButton,
                     alignment=ft.Alignment.BOTTOM_RIGHT,
-                    padding=10
+                    padding=0
             )
         ]
     )
