@@ -51,7 +51,7 @@ def homePage(page: ft.Page):
                     ft.Container(
                         content=startButton,
                         alignment=ft.Alignment.BOTTOM_RIGHT,
-                        padding=10,
+                        padding=0,
                     )
                 ],
                 expand=True

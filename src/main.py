@@ -3,6 +3,7 @@ from constants.colours import GENERAL_COLOURS
 from pages.home import homePage
 from pages.setup import setupPage
 from pages.qualifying import qualifyingPage
+from pages.grid import gridPage
 
 
 def main(page: ft.Page):
@@ -24,6 +25,9 @@ def main(page: ft.Page):
         
         if page.route == "/qualifying":
             page.views.append(qualifyingPage(page))
+        
+        if page.route == "/grid":
+            page.views.append(gridPage(page))
 
         #Refreshes the view
         page.update()

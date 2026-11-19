@@ -4,6 +4,24 @@ from constants.drivers import DRIVERS
 
 def qualifyingPage(page: ft.Page):
 
+    def pause():
+        pauseMenu.visible = True
+        page.update
+    
+    def resume():
+        pauseMenu.visible = False
+        page.update
+    
+    def quit():
+        page.overlay.remove(pauseMenu)
+        page.update
+        page.navigate("/")
+    
+    def toGrid():
+        page.overlay.remove(pauseMenu)
+        page.update
+        page.navigate("/grid")
+
     #Page title
     flag = ft.Image(
         src="images/chequered_flag.png",
@@ -14,10 +32,10 @@ def qualifyingPage(page: ft.Page):
         )
     
     #Button to navigate to the next page
-    qualifyingButton = ft.Button(
+    gridButton = ft.Button(
         "The Grid",
         key="the grid",
-        on_click=lambda _: None,
+        on_click=lambda _: toGrid(),
         style=ft.ButtonStyle(
             shape=ft.RoundedRectangleBorder(radius=15),
             text_style=ft.TextStyle(size=18),
@@ -42,6 +60,87 @@ def qualifyingPage(page: ft.Page):
         ),
     )
 
+    pauseMenu = ft.Container(
+        key="quali paused",
+        visible=False,
+
+        #Pulls the container to each edge
+        top=0,
+        bottom=0,
+        left=0,
+        right=0,
+
+        bgcolor=GENERAL_COLOURS["paused screen"],
+        blur=6,
+        alignment=ft.Alignment.CENTER,
+
+        content=ft.Column(
+            expand=True,
+            alignment=ft.MainAxisAlignment.CENTER,
+            
+            controls=[
+                ft.Text(
+                    "Paused",
+                    size=38,
+                    color=GENERAL_COLOURS["main text"]
+                ),
+                ft.TextButton(
+                    content="Resume",
+                    key="quali resume",
+                    on_click=lambda _: resume(),
+                    style=ft.ButtonStyle(
+                        color={
+                            ft.ControlState.DEFAULT: GENERAL_COLOURS["main text"],
+                            ft.ControlState.HOVERED: f"#66{GENERAL_COLOURS['main text'][1:]}"
+                        },
+                        overlay_color=ft.Colors.TRANSPARENT,
+                        text_style=ft.TextStyle(size=28),
+                    )
+                ),
+                ft.TextButton(
+                    content="Quit",
+                    key="quali quit",
+                    on_click=lambda _: quit(),
+                    style=ft.ButtonStyle(
+                        color={
+                            ft.ControlState.DEFAULT: GENERAL_COLOURS["main text"],
+                            ft.ControlState.HOVERED: f"#66{GENERAL_COLOURS['main text'][1:]}"
+                        },
+                        overlay_color=ft.Colors.TRANSPARENT,
+                        text_style=ft.TextStyle(size=28),
+                    )
+                )
+            ]
+        )
+    )
+
+    pauseButton = ft.IconButton(
+        icon=ft.Icons.PAUSE,
+        key="quali pause",
+        on_click=lambda _: pause(),
+        width=40,
+        height=40,
+        style=ft.ButtonStyle(
+            icon_size=40,
+            bgcolor={
+                ft.ControlState.DEFAULT: ft.Colors.TRANSPARENT,
+            },
+            overlay_color={
+                ft.ControlState.DEFAULT: ft.Colors.TRANSPARENT,
+                ft.ControlState.PRESSED: ft.Colors.TRANSPARENT
+            },
+            icon_color={
+                ft.ControlState.DEFAULT: GENERAL_COLOURS["overlay"],
+                ft.ControlState.HOVERED: GENERAL_COLOURS["main text"],
+                ft.ControlState.PRESSED: GENERAL_COLOURS["tester"]
+            },
+            
+            padding=0,
+        )
+    )
+
+    page.overlay.append(pauseMenu)
+
     return ft.View(
         route="/qualifying",
         bgcolor=GENERAL_COLOURS["background"],
@@ -53,12 +152,17 @@ def qualifyingPage(page: ft.Page):
                         alignment=ft.Alignment.TOP_CENTER,
                     ),
                     ft.Container(
-                        content=qualifyingButton,
-                        alignment=ft.Alignment.BOTTOM_RIGHT,
-                        padding=10,
+                        content=gridButton,
+                        bottom=10,
+                        right=10
+                    ), 
+                    ft.Container(
+                        content=pauseButton,
+                        bottom=2
                     )
                 ],
-                expand=True
+                expand=True,
+                alignment=ft.Alignment.CENTER
             )    
         ],
         padding=0
