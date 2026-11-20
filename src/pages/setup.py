@@ -205,7 +205,6 @@ def setupPage(page: ft.Page):
             icon_color={
                 ft.ControlState.DEFAULT: GENERAL_COLOURS["overlay"],
                 ft.ControlState.HOVERED: GENERAL_COLOURS["main text"],
-                ft.ControlState.PRESSED: GENERAL_COLOURS["tester"]
             },
             
             padding=0,
