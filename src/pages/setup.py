@@ -3,18 +3,15 @@ from constants.colours import GENERAL_COLOURS, TEAM_COLOURS
 from constants.drivers import DRIVERS
 from constants.tracks import TRACKS
 from constants.difficulty import DIFFICULTY_LEVELS
+import backend.qualis as qualis
 import asyncio
 
 def setupPage(page: ft.Page):
-    #Variables to store selected driver, race, and difficulty
-    selectedDriver: int = None
-    selectedTrack: str = None
-    selectedDifficulty: str = None
 
     #Underlines the selected driver and clears past selection if required
     def highlight_selected_driver():
         for driver in driverNames:
-            if driver.key == selectedDriver:
+            if driver.key == qualis.userDriver:
                 driver.style = driver.style.copy(
                     text_style=driver.style.text_style.copy(
                         decoration=ft.TextDecoration.UNDERLINE
@@ -30,7 +27,7 @@ def setupPage(page: ft.Page):
     #Underlines the selected track and clears past selection if required
     def highlight_selected_track():
         for track in trackNames:
-            if track.key == selectedTrack:
+            if track.key == qualis.userTrack:
                 track.style = track.style.copy(
                     text_style=track.style.text_style.copy(
                         decoration=ft.TextDecoration.UNDERLINE
@@ -46,7 +43,7 @@ def setupPage(page: ft.Page):
     #Underlines the selected difficulty and clears past selection if required
     def highlight_selected_difficulty():
         for difficulty in diffLevels:
-            if difficulty.key == selectedDifficulty:
+            if difficulty.key == qualis.userDifficulty:
                 difficulty.style = difficulty.style.copy(
                     text_style=difficulty.style.text_style.copy(
                         decoration=ft.TextDecoration.UNDERLINE
@@ -61,59 +58,56 @@ def setupPage(page: ft.Page):
     
     #Selects (and highlights) the driver/unselects if already selected
     def select_driver(selectedDr: int):
-        nonlocal selectedDriver
-        if not selectedDriver == selectedDr:
-            selectedDriver = selectedDr
+        if not qualis.userDriver == selectedDr:
+            qualis.userDriver = selectedDr
         else:
-            selectedDriver = None
+            qualis.userDriver = None
         highlight_selected_driver()
         update_instructionLine()
 
     #Selects (and highlights) the track/unselects if already selected
     def select_track(selectedTr: str):
-        nonlocal selectedTrack
-        if not selectedTrack == selectedTr:
-            selectedTrack = selectedTr
+        if not qualis.userTrack == selectedTr:
+            qualis.userTrack = selectedTr
         else:
-            selectedTrack = None
+            qualis.userTrack = None
         highlight_selected_track()
         update_instructionLine()
 
     #Selects (and highlights) the difficulty/unselects if already selected
     def select_difficulty(selectedDi: str):
-        nonlocal selectedDifficulty
-        if not selectedDifficulty == selectedDi:
-            selectedDifficulty = selectedDi
+        if not qualis.userDifficulty == selectedDi:
+            qualis.userDifficulty = selectedDi
         else:
-            selectedDifficulty = None
+            qualis.userDifficulty = None
         highlight_selected_difficulty()
         update_instructionLine()
     
     def generate_instructions():
         instructions = "Before proceeding, please select a"
 
-        if selectedDriver is None and selectedTrack is not None and selectedDifficulty is not None:
+        if qualis.userDriver is None and qualis.userTrack is not None and qualis.userDifficulty is not None:
             instructions += " driver."
 
-        if selectedDriver is not None and selectedTrack is None and selectedDifficulty is not None:
+        if qualis.userDriver is not None and qualis.userTrack is None and qualis.userDifficulty is not None:
             instructions += " track."
 
-        if selectedDriver is not None and selectedTrack is not None and selectedDifficulty is None:
+        if qualis.userDriver is not None and qualis.userTrack is not None and qualis.userDifficulty is None:
             instructions += " difficulty."
 
-        if selectedDriver is None and selectedTrack is None and selectedDifficulty is not None:
+        if qualis.userDriver is None and qualis.userTrack is None and qualis.userDifficulty is not None:
             instructions += " driver and track."
 
-        if selectedDriver is None and selectedTrack is not None and selectedDifficulty is None:
+        if qualis.userDriver is None and qualis.userTrack is not None and qualis.userDifficulty is None:
             instructions += " driver and difficulty."
         
-        if selectedDriver is not None and selectedTrack is None and selectedDifficulty is None:
+        if qualis.userDriver is not None and qualis.userTrack is None and qualis.userDifficulty is None:
             instructions += " track and difficulty."
 
-        if selectedDriver is None and selectedTrack is None and selectedDifficulty is None:
+        if qualis.userDriver is None and qualis.userTrack is None and qualis.userDifficulty is None:
             instructions += " driver, track, and difficulty."
         
-        if selectedDriver is not None and selectedTrack is not None and selectedDifficulty is not None:
+        if qualis.userDriver is not None and qualis.userTrack is not None and qualis.userDifficulty is not None:
             instructions = "All necessary selections have been satisfied."
         
         return instructions
@@ -121,20 +115,25 @@ def setupPage(page: ft.Page):
     def update_instructionLine():
         instructionLine.value = generate_instructions()
         page.update()
+
+    def back_to_home():
+        qualis.clear_selections()
+        page.navigate("/")
+
      
     async def to_qualifying():
-        if selectedDriver is None or selectedTrack is None or selectedDifficulty is None:
+        if qualis.userDriver is None or qualis.userTrack is None or qualis.userDifficulty is None:
             #Stores the starting colour of each heading
             driverStartingColor = driverHeading.color
             trackStartingColor = driverHeading.color
             difficultyStartingColor = difficultyHeading.color
 
             #If a section has no selection the heading colour is changed 
-            if selectedDriver is None:
+            if qualis.userDriver is None:
                 driverHeading.color = GENERAL_COLOURS["error"]
-            if selectedTrack is None:
+            if qualis.userTrack is None:
                 trackHeading.color = GENERAL_COLOURS["error"]
-            if selectedDifficulty is None:
+            if qualis.userDifficulty is None:
                 difficultyHeading.color = GENERAL_COLOURS["error"]
 
             #Updates UI for error colouring and waits for 3 seconds
@@ -150,7 +149,8 @@ def setupPage(page: ft.Page):
             return
         
         else:
-            page.navigate("/qualifying"),
+            qualis.hot_laps()
+            page.navigate("/qualifying")
 
     #Page title
     title = ft.Text(
@@ -192,7 +192,7 @@ def setupPage(page: ft.Page):
     backButton = ft.IconButton(
         icon=ft.Icons.ARROW_BACK_IOS,
         key="back",
-        on_click=lambda _: page.navigate("/"),
+        on_click=lambda _: back_to_home(),
         style=ft.ButtonStyle(
             icon_size=40,
             bgcolor={
