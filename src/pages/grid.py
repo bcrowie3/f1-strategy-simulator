@@ -51,7 +51,7 @@ def gridPage(page: ft.Page):
                     ft.Container(
                         content=driverBriefingButton,
                         alignment=ft.Alignment.BOTTOM_RIGHT,
-                        padding=10,
+                        padding=0,
                     )
                 ],
                 expand=True

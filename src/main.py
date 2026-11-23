@@ -23,10 +23,10 @@ def main(page: ft.Page):
         if page.route == "/setup":
             page.views.append(setupPage(page))
         
-        if page.route == "/qualifying":
+        elif page.route == "/qualifying":
             page.views.append(qualifyingPage(page))
         
-        if page.route == "/grid":
+        elif page.route == "/grid":
             page.views.append(gridPage(page))
 
         #Refreshes the view

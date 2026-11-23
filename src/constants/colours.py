@@ -33,7 +33,8 @@ DATA_POINT_STATUS_COLOURS = {
 
 TIMING_COLOURS = {
     "purple": "#9900FF",
-    "green": "#00D21D"
+    "green": "#00D21D",
+    "quali end": "#E20000"
 }
 
 GENERAL_COLOURS = {
