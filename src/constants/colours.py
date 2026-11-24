@@ -31,12 +31,14 @@ DATA_POINT_STATUS_COLOURS = {
     "pessimal": "#C50000" 
 }
 
+#Colours to represent timings
 TIMING_COLOURS = {
     "purple": "#9900FF",
     "green": "#00D21D",
     "quali end": "#E20000"
 }
 
+#Colours for general use
 GENERAL_COLOURS = {
     "background": "#1D1D1D",
     "overlay": "#464646",

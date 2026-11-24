@@ -56,7 +56,7 @@ def qualifyingPage(page: ft.Page):
         for place, data in qualis.positions.items()
     ]
 
-    #Page title
+    #Chequered flag
     flag = ft.Image(
         src="images/chequered_flag.png",
         key="qualis chequered flag",
@@ -181,7 +181,7 @@ def qualifyingPage(page: ft.Page):
 
     #Second part of the heading for the positions table
     headingB = ft.Text(
-        "strategy", 
+        "Strategy", 
         size=24,
         color=GENERAL_COLOURS["main text"]
     )
@@ -249,6 +249,7 @@ def qualifyingPage(page: ft.Page):
                                     controls=[
                                         ft.Row(
                                             alignment=ft.MainAxisAlignment.CENTER,
+                                            vertical_alignment=ft.CrossAxisAlignment.BASELINE,
                                             spacing=8,
                                             controls=[
                                                 headingA,

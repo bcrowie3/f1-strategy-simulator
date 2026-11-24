@@ -229,6 +229,8 @@ def hot_laps():
     
     #Working out the formatted times
     for place in positions.values():
+
+        #Stores the remaining time in milliseconds after reductions during the calculation
         timeLeft = place["time"]
 
         #Calculating minutes, removing them from the total and making string versions
