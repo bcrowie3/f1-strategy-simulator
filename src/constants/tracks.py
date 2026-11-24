@@ -9,20 +9,20 @@ TRACKS = {
         "length": 5891,
         "laps": 52,
         "pit stop delta": 20.00,
-
+        "pole side": "left"
     },
     "Circuit of the Americas": {
         "country": "USA",
         "length": 5513,
         "laps": 56,
         "pit stop delta": 19.90,
-
+        "pole side": "right"
     },
     "Circuit de Barcelona - Catalunya": {
         "country": "Spain",
         "length": 4657,
         "laps": 66,
         "pit stop delta": 22.96,
-
+        "pole side": "left"
     },
 }
